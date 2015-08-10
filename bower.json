@@ -1,0 +1,27 @@
+{
+  "name": "fnx.local",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ltarasiewicz/scotchbox-ansible",
+  "authors": [
+    "lukasz.tarasiewicz86@gmail.com"
+  ],
+  "description": "Fnx interview assignment",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "fnx"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5"
+  }
+}

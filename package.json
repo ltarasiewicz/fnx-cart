@@ -1,0 +1,14 @@
+{
+  "name": "fnx.local",
+  "version": "0.0.1",
+  "description": "Fnx interview assignement",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fnx"
+  ],
+  "author": "Lukasz Tarasiewicz",
+  "license": "BSD-2-Clause"
+}

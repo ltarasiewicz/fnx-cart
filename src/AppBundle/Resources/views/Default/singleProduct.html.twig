@@ -1,0 +1,33 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block content_block %}
+    <div id="single-product">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="{{ product.thumbnail }}" alt="{{ product.title }}" class="img-thumbnail">
+            </div>
+            <div class="col-sm-6">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Product</th>
+                        <td>{{ product.title }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Producer</th>
+                        <td>{{ product.title }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>{{ product.description }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price</th>
+                        <td>{{ product.price }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- #single-product -->
+    </div>
+{% endblock %}
