@@ -5,17 +5,21 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Category;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route(
+     *      "/{page}",
+     *      name="homepage",
+     *      defaults = {"page" = 1},
+     *      requirements = {"page" = "\d+"}
+     * )
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -24,52 +28,51 @@ class DefaultController extends Controller
         $categories = $em->getRepository('AppBundle:Category')
             ->findAll();
 
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('filter_products'))
-            ->setMethod('GET')
-            ->add('category', 'entity', [
-                'class' => 'AppBundle:Category',
-                'choice_label' => 'title',
-            ])
-            ->add('save', 'submit')
-            ->getForm();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products,
+            $page,
+            6
+        );
 
         return [
             'products' => $products,
             'productsCount' => $this->get('cart')->getProductsCount(),
             'categories'    => $categories,
-            'form' => $form->createView(),
+            'pagination'    => $pagination,
         ];
     }
 
     /**
-     * @Route("/category",  name="filter_products")
+     * @Route(
+     *      "/category/{id}/{page}",
+     *      name="filter_products",
+     *      defaults = {"page" = 1},
+     *      requirements = {"page" = "\d+"}
+     * )
      */
-    public function filterProductsAction(Request $request)
+    public function filterProductsAction(Category $category, $page)
     {
-        $categoryId = $request->query->get('form')['category'];
 
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository('AppBundle:Product')
-            ->findByCategory($categoryId);
+            ->findByCategory($category->getId());
         $categories = $em->getRepository('AppBundle:Category')
             ->findAll();
 
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('filter_products'))
-            ->setMethod('GET')
-            ->add('category', 'entity', [
-                'class' => 'AppBundle:Category',
-                'choice_label' => 'title',
-            ])
-            ->add('save', 'submit')
-            ->getForm();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products,
+            $page,
+            6
+        );
 
         return $this->render('AppBundle:Default:index.html.twig', [
             'products' => $products,
             'productsCount' => $this->get('cart')->getProductsCount(),
             'categories' => $categories,
-            'form' => $form->createView(),
+            'current_category' => $category,
+            'pagination'    =>  $pagination,
         ]);
 
     }
@@ -100,7 +103,6 @@ class DefaultController extends Controller
      */
     public function addProductAction(Product $product)
     {
-        //$em = $this->getDoctrine()->getManager();
         $productId = $product->getId();
         $cart = $this->get('cart');
         $cart->addProduct($productId);

@@ -6062,12 +6062,19 @@ button.close {
 body {
   padding-top: 50px; }
 
+img {
+  width: 100%; }
+
 .starter-template {
   padding: 40px 15px;
   text-align: center; }
 
 #cart-spy {
-  height: 50px; }
+  line-height: 50px;
+  padding: 0 12px; }
 
 #filters {
   margin-bottom: 15px; }
+
+#category-filter {
+  max-width: 300px; }

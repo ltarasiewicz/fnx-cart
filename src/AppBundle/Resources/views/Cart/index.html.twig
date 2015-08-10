@@ -5,8 +5,9 @@
     <div id="products">
         <div class="row">
             <div class="col-sm-12">
+                {% if products is not empty %}
                 <table class="table">
-                    <caption>Optional table caption.</caption>
+                    <caption>Order summary</caption>
                     <tbody>
                         {% for product in products %}
                         <tr>
@@ -22,11 +23,14 @@
                         <tr>
                             <th scope="row">-</th>
                             <td>-</td>
-                            <td>Całkowity koszt:</td>
+                            <td>Total cost:</td>
                             <td><span class="label label-info">{{ total }}</span></td>
                         </tr>
                     </tfoot>
                 </table>
+                {% else %}
+                    <div class="alert alert-info" role="alert">Your cart is currently empty<i class="glyphicon glyphicon-shopping-cart pull-right"></i></div>
+                {% endif %}
             </div>
         </div>
     </div>

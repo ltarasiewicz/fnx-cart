@@ -5,29 +5,27 @@
     <div id="filters">
         <div class="row">
             <div class="col-sm-12">
-                {#<form class="form-inline" method="GET" action="{{ path('filter_products') }}">#}
-                    {#<div class="form-group">#}
-                        {#<label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>#}
-                        {#<div class="input-group">#}
-                            {#<div class="input-group-addon">Choose category</div>#}
-                            {#<select class="form-control" name="product_category">#}
-                                {#{% for category in categories %}#}
-                                {#<option value="{{ category.id }}">{{ category.title }}</option>#}
-                                {#{% endfor %}#}
-                            {#</select>#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#<button type="submit" class="btn btn-primary">Filter products</button>#}
-                {#</form>#}
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
+                <div class="form-group pull-right" id="category-filter">
+                    <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">Choose category</div>
+                        <select class="form-control" name="product_category" onchange="window.location.href=this.value">
+                            <option value="{{ path('homepage') }}">All products</option>
+                            {% for category in categories %}
+                            <option value="{{ path('filter_products', {'id': category.id}) }}"
+                                    {% if current_category is defined and current_category == category %} selected {% endif %}>
+                                        {{ category.title|capitalize }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div id="products">
         <div class="row">
-            {% for product in products %}
+            {% for product in pagination %}
             <div class="product col-sm-4">
                 <div class="thumbnail">
                     <a href="{{ path('single_product', {'id': product.id}) }}"><img class="img-responsive" src="{{ product.thumbnail }}"/></a>
@@ -36,11 +34,20 @@
                     <h3>{{ product.title }}</h3>
                     <p>{{ product.description }}</p>
                     <p>
-                        <span class="price label label-info">Price: {{ product.price }}</span> <a href="{{ path('add_product', {'id': product.id}) }}" class="btn btn-primary" role="button">Add to cart</a>
+                        <span class="price label label-info">Price: {{ product.price }}</span>
+                        <a href="{{ path('add_product', {'id': product.id}) }}" class="btn btn-primary" role="button">Add to cart</a>
+                        <span class="price label label-info">Category: {{ product.category.title|capitalize }}</span>
                     </p>
                 </div>
             </div>
             {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -57,6 +57,12 @@ class Product
 
 
     /**
+     * @ORM\Column(type="string", length=120)
+     */
+    private $manufacturer;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -225,5 +231,28 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set manufacturer
+     *
+     * @param string $manufacturer
+     * @return Product
+     */
+    public function setManufacturer($manufacturer)
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Get manufacturer
+     *
+     * @return string 
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
     }
 }

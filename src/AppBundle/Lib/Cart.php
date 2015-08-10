@@ -26,8 +26,7 @@ class Cart
     {
         $productsInCart = [];
 
-        $request = $this->requestStack->getCurrentRequest();
-        $session = $request->getSession();
+        $session = $this->retrieveSession();
 
         if($session->has('products')) {
             $productsInCart = $session->get('products');
@@ -39,8 +38,7 @@ class Cart
 
     public function removeProduct($productId)
     {
-        $request = $this->requestStack->getCurrentRequest();
-        $session = $request->getSession();
+        $session = $this->retrieveSession();;
 
         $productsInCart = $session->get('products');
 
@@ -60,8 +58,7 @@ class Cart
 
     public function getAllProducts()
     {
-        $request = $this->requestStack->getCurrentRequest();
-        $session = $request->getSession();
+        $session = $this->retrieveSession();
         return $session->get('products');
     }
 
@@ -86,6 +83,13 @@ class Cart
         )->setParameter('productIds', $productIds);
 
         return $query->getSingleScalarResult();
+    }
+
+    private function retrieveSession()
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        return $request->getSession();
     }
 
 }
