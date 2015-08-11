@@ -7,10 +7,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Product;
 
+/**
+ * Controllers responsible for manipulating the shopptig cart
+ *
+ * @author Łukasz Tarasiewicz <lukasz.tarasiewicz86@gmail.com>
+ */
 class CartController extends Controller
 {
     /**
-     * @Route("/cart", name="cart_view")
+     * @Route(
+     *      "/cart",
+     *      name="cart_view"
+     * )
      * @Template()
      */
     public function indexAction()
@@ -30,7 +38,11 @@ class CartController extends Controller
     }
 
     /**
-     * @Route("/remove/{id}", name="remove_from_cart")
+     * @Route(
+     *      "/remove/{id}",
+     *      name="remove_from_cart",
+     *      requirements = {"id" = "\d+"}
+     * )
      * @Template()
      */
     public function removeFromCartAction(Product $product)

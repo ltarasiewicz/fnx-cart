@@ -11,6 +11,11 @@ namespace AppBundle\Lib;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * A wrapper class around Symfony's session service
+ *
+ * @author Łukasz Tarasiewicz <lukas.tarasiewicz86@gmail.com>
+ */
 class Cart
 {
     private $requestStack;
@@ -41,8 +46,6 @@ class Cart
         $session = $this->retrieveSession();;
 
         $productsInCart = $session->get('products');
-
-        $p = $productsInCart;
 
         if(false !== ($key = array_search($productId, $productsInCart))) {
             unset($productsInCart[$key]);

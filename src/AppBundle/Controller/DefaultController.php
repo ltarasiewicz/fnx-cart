@@ -8,6 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\Category;
 
+/**
+ * Default FNX Cart application controllers
+ *
+ * @author Łukasz Tarasiewicz <lukasz.tarasiewicz86@gmail.com>
+ */
 class DefaultController extends Controller
 {
     /**
@@ -79,7 +84,11 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("product/{id}", name="single_product")
+     * @Route(
+     *      "product/{id}",
+     *      name="single_product",
+     *      requirements = {"id" = "\d+"}
+     * )
      * @Template()
      */
     public function singleProductAction(Product $product)
@@ -98,7 +107,7 @@ class DefaultController extends Controller
      * @Route(
      *      "/add-product/{id}",
      *      name="add_product",
-     *      requirements={"id"="\d+"},
+     *      requirements={"id" = "\d+"}
      * )
      */
     public function addProductAction(Product $product)
